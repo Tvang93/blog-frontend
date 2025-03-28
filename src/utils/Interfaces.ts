@@ -14,7 +14,7 @@ export interface IBlogItems {
 
 //This will be used for our login and crete account fetch
 export interface IUSerInfo {
-    Username: string
+    username: string
     password: string
 }
 

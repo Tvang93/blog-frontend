@@ -1,5 +1,7 @@
 'use client'
 
+import { createAccount, getLoggedInUserData, login } from "@/utils/DataServices";
+import { IToken } from "@/utils/Interfaces";
 import { Button, Checkbox, Label, TextInput } from "flowbite-react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -24,12 +26,24 @@ export default function Home() {
 
     if(switchBool){
       //create account
-      console.log("account created")
+      let result = await createAccount(userData);
+      result ? alert("Account Created") : alert("Username Already Exist")
     }else{
       //login
-      console.log("login")
+      let token: IToken = await login(userData);
 
-      push('/Dashboard')
+      if(token != null){
+        if(typeof window != null){
+          localStorage.setItem("Token", token.token)
+          console.log(token.token)
+          await getLoggedInUserData(username)
+
+
+        }
+        push('/Dashboard')
+      }else{
+        alert("Login was no good. Wrong Password or Something.")
+      }
     }
     
   }
