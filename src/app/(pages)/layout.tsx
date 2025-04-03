@@ -1,3 +1,4 @@
+import { NavbarComponent } from '@/components/NavbarComponent';
 import React from 'react'
 
 const layout = ({
@@ -7,6 +8,7 @@ const layout = ({
 }>) => {
   return (
     <div>
+        <NavbarComponent />
         {children}
     </div>
   )

@@ -1,4 +1,4 @@
-import { IUserData, IUSerInfo } from "./Interfaces";
+import { IBlogItems, IUserData, IUserInfo } from "./Interfaces";
 
 
 const url = "https://thaoblog-efd3egd7c4beb9cs.westus-01.azurewebsites.net/"
@@ -8,7 +8,7 @@ const url = "https://thaoblog-efd3egd7c4beb9cs.westus-01.azurewebsites.net/"
 let userData: IUserData;
 
 //create account fetch
-export const createAccount = async (user:IUSerInfo) => {
+export const createAccount = async (user:IUserInfo) => {
     const res = await fetch(`${url}User/CreateUser`, {
         method: 'POST',
         headers: {
@@ -30,7 +30,7 @@ export const createAccount = async (user:IUSerInfo) => {
 }
 
 //login fetch
-export const login = async (user: IUSerInfo) => {
+export const login = async (user: IUserInfo) => {
     const res = await fetch(`${url}User/Login`, {
         method: 'POST',
         headers: {
@@ -81,4 +81,105 @@ export const checkToken = () => {
         }
     }
     return result
+}
+
+
+// -------------------------------------------- BLOG ENDPOINTS ---------------------------------------------
+
+export const getAllBlogs = async(token:string) => {
+    const res = await fetch(url + "Blog/GetAllBlogs", {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + token
+        }
+    });
+    if(!res.ok){
+        const errorData = await res.json();
+        const message = errorData.message;
+        console.log(message);
+        return [];
+    }
+    const data = await res.json();
+    return data;
+}
+
+export const getBlogItemsByUserId = async (userId: number, token: string) => {
+    const res = await fetch(url + "Blog/GetBlogsByUserId/" + userId, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + token
+        }
+    });
+    if(!res.ok){
+        const errorData = await res.json();
+        const message = errorData.message;
+        console.log(message);
+        return [];
+    }
+    const data = await res.json();
+    return data;
+}
+
+export const addBlogItem = async (blog: IBlogItems, token: string) => {
+    const res = await fetch(url + "Blog/AddBlog", {
+        method: "POST",
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorizatoion': 'Bearer ' + token
+        },
+        body: JSON.stringify(blog)
+    });
+    if(!res.ok){
+        const errordata = await res.json();
+        const message = errordata.message;
+        console.log(message);
+        return false;
+    }
+    const data = await res.json();
+    return data.success;
+}
+
+export const updateBlogItem = async (blog: IBlogItems, token: string) => {
+    const res = await fetch(url + "Blog/EditBlog", {
+        method: "PUT",
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorizatoion': 'Bearer ' + token
+        },
+        body: JSON.stringify(blog)
+    });
+    if(!res.ok){
+        const errordata = await res.json();
+        const message = errordata.message;
+        console.log(message);
+        return false;
+    }
+    const data = await res.json();
+    return data.success;
+}
+
+export const deleteBlogItem = async (blog: IBlogItems, token: string) => {
+    const res = await fetch(url + "Blog/DeleteBlog", {
+        method: "DELETE",
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorizatoion': 'Bearer ' + token
+        },
+        body: JSON.stringify(blog)
+    });
+    if(!res.ok){
+        const errordata = await res.json();
+        const message = errordata.message;
+        console.log(message);
+        return false;
+    }
+    const data = await res.json();
+    return data.success;
+}
+
+export const getToken = () => {
+    //?? "" if its null return ""
+    return localStorage.getItem("Token") ?? ""
 }

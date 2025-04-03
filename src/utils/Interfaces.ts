@@ -13,7 +13,7 @@ export interface IBlogItems {
 
 
 //This will be used for our login and crete account fetch
-export interface IUSerInfo {
+export interface IUserInfo {
     username: string
     password: string
 }
