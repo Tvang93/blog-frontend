@@ -127,7 +127,7 @@ export const addBlogItem = async (blog: IBlogItems, token: string) => {
         method: "POST",
         headers: {
             'Content-Type': 'application/json',
-            'Authorizatoion': 'Bearer ' + token
+            'Authorization': 'Bearer ' + token
         },
         body: JSON.stringify(blog)
     });
@@ -146,7 +146,7 @@ export const updateBlogItem = async (blog: IBlogItems, token: string) => {
         method: "PUT",
         headers: {
             'Content-Type': 'application/json',
-            'Authorizatoion': 'Bearer ' + token
+            'Authorization': 'Bearer ' + token
         },
         body: JSON.stringify(blog)
     });
@@ -165,7 +165,7 @@ export const deleteBlogItem = async (blog: IBlogItems, token: string) => {
         method: "DELETE",
         headers: {
             'Content-Type': 'application/json',
-            'Authorizatoion': 'Bearer ' + token
+            'Authorization': 'Bearer ' + token
         },
         body: JSON.stringify(blog)
     });
